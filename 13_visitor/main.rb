@@ -46,8 +46,10 @@ class DirectoryEntry < Entry
     visitor.visit(self)
   end
 
+  # Array#eachからRubyのブロックを理解する
+  # https://qiita.com/bisque33/items/4e09257945b883628703
   def each(&block) # TODO each の委譲できるようにする。
-    @entries
+    @entries.each(&block)
   end
 end
 
@@ -67,7 +69,7 @@ class ListVisitor
       # pp "#{entry.name} の entry.each 前"
       # pp "#{entry.entries}"
       @current_directory = "#{@current_directory}/#{entry.name}"
-      entry.entries.each do |e|
+      entry.each do |e|
         # pp "#{entry.name} の entry.each 中"
         # pp "#{e.name}"
         e.accept(self)
